@@ -2,6 +2,7 @@
 
 (function() {
   var mapPins = document.querySelector('.map__pins');
+  //Не нужна самовызывающаяся функция
   (function() {
     var MARGINX = 20;
     var MARGINY = 40;

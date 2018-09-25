@@ -201,14 +201,50 @@
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
 
-  var onMainPinFirstMouseup = function () {
+  var onMainPinFirstMouseDown = function() {
     map.classList.remove('map--faded');
     window.pinsAction.showPins();
     var form = document.querySelector('.notice__form');
     form.classList.remove('notice__form--disabled');
-    window.formAction.activeForm();
-    mainPin.removeEventListener('mouseup', onMainPinFirstMouseup);
+    window.formAction.disabledFieldsets(false);
+    mainPin.removeEventListener('mousedown', onMainPinFirstMouseDown);
   }
 
-  mainPin.addEventListener('mouseup', onMainPinFirstMouseup);
+  var onMainPinMouseDown = function(evt) {
+    evt.preventDefault();
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    }
+
+    var onMainPinMouseMove = function(moveEvt) {
+      moveEvt.preventDefault();
+      var address = document.querySelector('#address');
+      address.value = 'x: ' + moveEvt.clientX + ', y: ' + moveEvt.clientY;
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      }
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      }
+
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    }
+
+    var onMainPinMouseUp = function(upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMainPinMouseMove);
+      document.removeEventListener('mouseup', onMainPinMouseUp);
+    }
+
+    document.addEventListener('mousemove', onMainPinMouseMove);
+    document.addEventListener('mouseup', onMainPinMouseUp);
+  }
+
+  mainPin.addEventListener('mousedown', onMainPinFirstMouseDown);
+  mainPin.addEventListener('mousedown', onMainPinMouseDown);
 })();

@@ -2,80 +2,95 @@
 
 (function () {
 
-  var form = document.querySelector('.notice__form');
-  form.method = 'post';
-  form.target = 'https://js.dump.academy/keksobooking';
-
-  (function() {
-    var fieldsets = form.querySelectorAll('fieldset');
-    for (var i = 0; i < fieldsets.length; i++) {
-      fieldsets[i].disabled = true;
-    }
-  })();
-
-  var inputTitle = form.querySelector('#title');
-  inputTitle.required = true;
-  inputTitle.minLength = 30;
-  inputTitle.maxLength = 100;
-
-  var inputAddress = form.querySelector('#address');
-  inputAddress.readOnly = true;
-  inputAddress.required = true;
-
-  var inputTypeOfHouse = form.querySelector('#type');
-
-  var inputPrice = form.querySelector('#price');
-  inputPrice.required = true;
-  inputPrice.min = 0;
-  inputPrice.max = 1000000;
-  inputPrice.value = 1000;
-
-  var onTypeOfHouseChange = function() {
-    switch (inputTypeOfHouse.value) {
-      case 'bungalo':
-        inputPrice.min = 0;
-        inputPrice.value = 0;
-        break;
-      case 'flat':
-        inputPrice.min = 1000;
-        inputPrice.value = 1000;
-        break;
-      case 'house':
-        inputPrice.min = 5000;
-        inputPrice.value = 5000;
-        break;
-      case 'palace':
-        inputPrice.min = 10000;
-        inputPrice.value = 10000;
-        break;
-      default:
-      break;
-    }
-  }
+  var inputTypeOfHouse = document.querySelector('#type');
   inputTypeOfHouse.addEventListener('change', onTypeOfHouseChange);
 
-  var inputTimeIn = form.querySelector('#timein');
-  var inputTimeOut = form.querySelector('#timeout');
-  var inputTimeOutOptions = inputTimeOut.querySelectorAll('option');
-  var disableTimeOut = function() {
-    for (var i = (inputTimeIn.selectedIndex + 1); i < inputTimeOutOptions.length; i++) {
-      inputTimeOutOptions[i].disabled = true;
+  var inputTimeIn = document.querySelector('#timein');
+  inputTimeIn.addEventListener('change', onInputTimeInChange);
+
+  disabledFieldsets(true);
+  disableTimeOut();
+  formInit();
+
+  function onTypeOfHouseChange() {
+    var BUNGALOPRICE = 0;
+    var FLATPRICE = 1000;
+    var HOUSEPRICE = 5000;
+    var PALACEPRICE = 10000;
+    switch (inputTypeOfHouse.value) {
+      case 'bungalo':
+        inputPriceInit(BUNGALOPRICE);
+        break;
+      case 'flat':
+        inputPriceInit(FLATPRICE);
+        break;
+      case 'house':
+        inputPriceInit(HOUSEPRICE);
+        break;
+      case 'palace':
+        inputPriceInit(PALACEPRICE);
+        break;
     }
   }
-  disableTimeOut();
-  inputTimeIn.addEventListener('change', function() {
+
+  function onInputTimeInChange() {
+    var inputTimeOutOptions = form.querySelector('#timeout').querySelectorAll('option');
     for (var i = 0; i < inputTimeOutOptions.length; i++) {
       inputTimeOutOptions[i].disabled = false;
     }
     disableTimeOut();
     inputTimeOut.selectedIndex = inputTimeIn.selectedIndex;
-  });
+  }
+
+  function formInit() {
+    var form = document.querySelector('.notice__form');
+    form.method = 'post';
+    form.target = 'https://js.dump.academy/keksobooking';
+
+    inputTitleInit();
+    inputAddressInit();
+    inputPriceInit();
+
+    function inputTitleInit() {
+      var inputTitle = form.querySelector('#title');
+      inputTitle.required = true;
+      inputTitle.minLength = 30;
+      inputTitle.maxLength = 100;
+    }
+    function inputAddressInit() {
+      var inputAddress = form.querySelector('#address');
+      inputAddress.readOnly = true;
+      inputAddress.required = true;
+    }
+
+    function inputPriceInit() {
+      var inputPrice = form.querySelector('#price');
+      inputPrice.required = true;
+      inputPrice.min = 0;
+      inputPrice.max = 1000000;
+      inputPrice.value = 1000;
+    }
+  }
+
+  function disabledFieldsets(bool) {
+    var fieldsets = document.querySelectorAll('fieldset');
+    for (var i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = bool;
+    }
+  }
+
+  function disableTimeOut() {
+    var inputTimeOutOptions = document.querySelector('#timeout').querySelectorAll('option');
+    for (var i = (inputTimeIn.selectedIndex + 1); i < inputTimeOutOptions.length; i++) {
+      inputTimeOutOptions[i].disabled = true;
+    }
+  }
 
   window.formAction = {
-    activeForm: function() {
+    disabledFieldsets: function(bool) {
       var fieldsets = document.querySelector('.notice__form').querySelectorAll('fieldset');
       for (var i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = false;
+        fieldsets[i].disabled = bool;
       }
     }
   }
