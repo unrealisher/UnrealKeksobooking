@@ -16,8 +16,6 @@
   var MINY = 100;
   var MAXY = 500;
 
-  var ESCKEY = 27;
-
   window.offers = [
     {
       'author': {
@@ -206,7 +204,7 @@
     window.pinsAction.showPins();
     var form = document.querySelector('.notice__form');
     form.classList.remove('notice__form--disabled');
-    window.formAction.disabledFieldsets(false);
+    window.formAction.disableFieldsets(false);
     mainPin.removeEventListener('mousedown', onMainPinFirstMouseDown);
   }
 

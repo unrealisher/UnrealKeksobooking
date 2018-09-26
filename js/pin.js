@@ -38,7 +38,7 @@
           break;
         }
       }
-      document.addEventListener('keydown', window.cardAction.MapCardEscPress);
+      document.addEventListener('keydown', window.cardAction.onMapCardEscPress);
     }
   });
 

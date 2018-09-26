@@ -62,9 +62,10 @@
   window.cardAction = {
 
     onMapCardEscPress: function (evt) {
+      var ESCKEY = 27;
       if (evt.keyCode === ESCKEY) {
         mapCardRemove();
-        document.removeEventListener('keydown', onMapCardEscPress);
+        document.removeEventListener('keydown', window.cardAction.onMapCardEscPress);
       }
     }
 
