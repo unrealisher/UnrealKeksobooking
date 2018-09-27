@@ -1,9 +1,58 @@
 'use strict';
 
 (function() {
+
+  window.pinsAction = {
+
+    showPins: function() {
+      var pins = mapPins.querySelectorAll('.map__pin');
+      for (var i = 0; i < pins.length; i++) {
+        pins[i].classList.remove('hidden');
+      }
+    },
+
+    deactivatePin: function() {
+      var activePin = document.querySelector('.map__pin--active');
+      if (!activePin) {return;}
+      activePin.classList.remove('map__pin--active');
+    }
+
+  }
+
+
+
   var mapPins = document.querySelector('.map__pins');
-  //Не нужна самовызывающаяся функция
-  (function() {
+  mapPins.addEventListener('click', onPinClick);
+
+  initPins();
+
+
+
+  function onPinClick(evt) {
+    var objTarget;
+    if (evt.target.localName === 'img') {
+      objTarget = evt.target.parentElement;
+    }
+    else if (evt.target.localName === 'button') {
+      objTarget = evt.target;
+    }
+    else {
+      return;
+    }
+
+    window.pinsAction.deactivatePin();
+    var objImageSrc = objTarget.querySelector('img').src;
+    for (var i = 0; i < offers.length; i++) {
+      if (objImageSrc.indexOf(offers[i].author.avatar) !== -1) {
+        window.cardAction.initMapCard(offers[i]);
+        break;
+      }
+    }
+    objTarget.classList.add('map__pin--active');
+    document.addEventListener('keydown', window.cardAction.onMapCardEscPress);
+  }
+
+  function initPins() {
     var MARGINX = 20;
     var MARGINY = 40;
     var fragment = document.createDocumentFragment();
@@ -15,42 +64,6 @@
       fragment.appendChild(newElement);
     }
     mapPins.appendChild(fragment);
-  })();
-
-  mapPins.addEventListener('click', function(evt) {
-    var objTarget;
-    var previousPin = mapPins.querySelector('.map__pin--active');
-    if (evt.target.localName === 'img') {
-      objTarget = evt.target.parentElement;
-    }
-    else if (evt.target.localName === 'button') {
-      objTarget = evt.target;
-    }
-    if (objTarget != null && !objTarget.classList.contains('map__pin--main')) {
-      if (previousPin != null) {
-        previousPin.classList.remove('map__pin--active');
-      }
-      objTarget.classList.add('map__pin--active');
-      var objImageSrc = objTarget.querySelector('img').src;
-      for (var i = 0; i < offers.length; i++) {
-        if (objImageSrc.indexOf(offers[i].author.avatar) != -1) {
-          window.initMapCard(offers[i]);
-          break;
-        }
-      }
-      document.addEventListener('keydown', window.cardAction.onMapCardEscPress);
-    }
-  });
-
-  window.pinsAction = {
-
-    showPins: function() {
-      var pins = mapPins.querySelectorAll('.map__pin');
-      for (var i = 0; i < pins.length; i++) {
-        pins[i].classList.remove('hidden');
-      }
-    }
-
-  }
+  };
 
 })();
