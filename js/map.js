@@ -219,6 +219,9 @@
 
     function onMainPinMouseMove(moveEvt) {
       moveEvt.preventDefault();
+      if ((moveEvt.clientY < 100 || moveEvt.clientY > 500) || (moveEvt.clientX < 400 || moveEvt.clientX > 1500)) {
+       return;
+      }
       var address = document.querySelector('#address');
       address.value = 'x: ' + moveEvt.clientX + ', y: ' + moveEvt.clientY;
       var shift = {
