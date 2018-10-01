@@ -26,8 +26,6 @@
 
   initPins();
 
-
-
   function onPinClick(evt) {
     var objTarget;
     if (evt.target.localName === 'img') {
@@ -39,8 +37,6 @@
     else {
       return;
     }
-
-    window.pinsAction.deactivatePin();
     var objImageSrc = objTarget.querySelector('img').src;
     for (var i = 0; i < offers.length; i++) {
       if (objImageSrc.indexOf(offers[i].author.avatar) !== -1) {
@@ -48,6 +44,7 @@
         break;
       }
     }
+    window.pinsAction.deactivatePin();
     objTarget.classList.add('map__pin--active');
     document.addEventListener('keydown', window.cardAction.onMapCardEscPress);
   }
@@ -64,6 +61,6 @@
       fragment.appendChild(newElement);
     }
     mapPins.appendChild(fragment);
-  };
+  }
 
 })();
