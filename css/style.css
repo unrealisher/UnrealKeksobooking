@@ -851,3 +851,16 @@ textarea:focus
 {
     background-position: -10px -10px;
 }
+
+.error-div {
+  position: absolute;
+  width: 100%;
+  min-height: 30px;
+  background-color: #ff5635;
+  color: black;
+  font-size: 21px;
+  line-height: 30px;
+  text-align: center;
+  top: 0px;
+  left: 0px;
+}

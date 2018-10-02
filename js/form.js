@@ -11,15 +11,22 @@
     }
   }
 
-  var inputTypeOfHouse = document.querySelector('#type');
+  var form = document.querySelector('.notice__form');
+  form.addEventListener('submit', onFormSubmit);
+
+  var inputTypeOfHouse = form.querySelector('#type');
   inputTypeOfHouse.addEventListener('change', onTypeOfHouseChange);
 
-  var inputTimeIn = document.querySelector('#timein');
+  var inputTimeIn = form.querySelector('#timein');
   inputTimeIn.addEventListener('change', onInputTimeInChange);
 
   window.formAction.disableFieldsets(true);
   disableInputTimeOut();
   initForm();
+
+  function onFormSubmit(evt) {
+    evt.preventDefault();
+  }
 
   function onTypeOfHouseChange(evt) {
     switch (evt.target.value) {
@@ -60,8 +67,9 @@
 
   function initForm() {
     var form = document.querySelector('.notice__form');
-    form.method = 'post';
+    form.method = 'POST';
     form.target = 'https://js.dump.academy/keksobooking';
+    form.enctype = 'multipart/form-data';
 
     initInputTitle(form);
     initInputAddress(form);
