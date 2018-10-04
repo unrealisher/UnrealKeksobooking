@@ -853,14 +853,15 @@ textarea:focus
 }
 
 .error-div {
-  position: absolute;
-  width: 100%;
-  min-height: 30px;
   background-color: #ff5635;
   color: black;
   font-size: 21px;
+  left: 0px;
   line-height: 30px;
+  min-height: 30px;
+  position: fixed;
   text-align: center;
   top: 0px;
-  left: 0px;
+  width: 100%;
+  z-index: 1;
 }

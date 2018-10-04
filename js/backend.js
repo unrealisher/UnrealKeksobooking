@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  window.load = function(url, onSuccess, onError) {
+  window.load = function(url, method, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function() {
       if (xhr.status === 200) {
@@ -21,7 +21,7 @@
     })
     xhr.timeout = 10000;
     xhr.responseType = 'json';
-    xhr.open('GET', url);
+    xhr.open(method, url);
     xhr.send();
   }
 })();
