@@ -221,8 +221,8 @@
     }
 }
 
-  var url = 'https://js.dump.academy/keksobooking/data';
-  window.load(url, 'GET', onUploadSuccess, window.onLoadError);
+  var URL = 'https://js.dump.academy/keksobooking/data';
+  window.load(URL, 'GET', onUploadSuccess, window.onLoadError);
   var mapPins = document.querySelector('.map__pins');
   mapPins.addEventListener('click', onPinClick);
 
