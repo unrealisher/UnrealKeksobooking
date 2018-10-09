@@ -2,7 +2,6 @@
 
 (function() {
 
-
   var selectHouseType = document.querySelector('#housing-type');
   selectHouseType.addEventListener('change', onFilterChange);
 
@@ -27,7 +26,8 @@
     filterOffers = filterRooms(filterOffers);
     filterOffers = filterGuests(filterOffers);
     filterOffers = filterFeatures(filterOffers);
-    console.log(filterOffers);
+    updatePins(filterOffers);
+    // window.debounce(updatePins.bind(filterOffers));
   }
 
   function filterTypeOfHouse(filterOffers) {
@@ -129,4 +129,9 @@
     return filterOffers;
   }
 
+  function updatePins(filterOffers) {
+    window.pinsAction.resetPins();
+    window.pinsAction.initPins(filterOffers);
+    window.pinsAction.showPins();
+  }
 })();
