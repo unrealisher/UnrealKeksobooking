@@ -10,6 +10,10 @@ body
     background-color: #f0f0ea;
 }
 
+* {
+  outline: none;
+}
+
 h1
 {
     font-size: 29px;
@@ -846,4 +850,18 @@ textarea:focus
 .footer-social-item-vk
 {
     background-position: -10px -10px;
+}
+
+.error-div {
+  background-color: #ff5635;
+  color: black;
+  font-size: 21px;
+  left: 0px;
+  line-height: 30px;
+  min-height: 30px;
+  position: fixed;
+  text-align: center;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
 }
